@@ -1,31 +1,34 @@
 public class Cryptography {
 
     static String encrypt(String message, int shift) {
-        String test = "";
-        for (int i = 0; i < message.length(); i++) {
-            test += (char) (message.charAt(i) + shift);
+        StringBuilder result = new StringBuilder();
+        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int len = alphabet.length();
+
+        for (char c : message.toCharArray()) {
+            int index = alphabet.indexOf(c);
+            if (index != -1) {
+                result.append(alphabet.charAt((index + shift) % len));
+            } else {
+                result.append(c);
+            }
         }
-        return test;
+        return result.toString();
     }
 
     static String decrypt(String message, int shift) {
-        String test = "";
-        for (int i = 0; i < message.length(); i++) {
-            test += (char) (message.charAt(i) - shift);
-        }
-        return test;
+        return encrypt(message, 26 - shift);
     }
 
-    public static void main(String[] args) throws Exception {
-        String msg = "Fuck You";
-        String encryptedMsg = encrypt(msg, 5);
-        // Send Message
+    public static void main(String[] args) {
+        String message = "HELLO WORLD";
+        int shift = 5;
 
-        // Intercept
-        System.out.println(encryptedMsg);
+        String encrypted = encrypt(message, shift);
+        String decrypted = decrypt(encrypted, shift);
 
-        // Receive Message
-        String decryptedMsg = decrypt(encryptedMsg, 5);
-        System.out.println(decryptedMsg);
+        System.out.println("Encrypted: " + encrypted);
+        System.out.println("Decrypted: " + decrypted);
+        System.out.println("Shift: " + shift);
     }
 }
