@@ -47,3 +47,4 @@ public class CaesarCipher {
         System.out.println("Decrypted: " + decrypted);
     }
 }
+
